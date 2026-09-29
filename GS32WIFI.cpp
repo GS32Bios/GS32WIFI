@@ -117,6 +117,19 @@ int GS32WIFI::getRSSI() const {
     return -100; // Минимальный уровень сигнала, если нет подключения
 }
 
+int GS32WIFI::getRSSIPercentage() const {
+    int rssi = getRSSI();
+    
+    if (rssi <= -100) return 0;
+    if (rssi >= -55)  return 100;
+    
+    if (rssi >= -65) return map(rssi, -65, -55, 85, 100); // Отличный
+    if (rssi >= -75) return map(rssi, -75, -65, 55, 84);  // Хороший
+    if (rssi >= -85) return map(rssi, -85, -75, 25, 54);  // Средний
+    
+    return map(rssi, -100, -85, 1, 24);                   // Слабый
+}
+
 int GS32WIFI::getConnectedClientsCount() const {
     if (_mode == GS32_WIFI_AP || _mode == GS32_WIFI_AP_STA) {
         return WiFi.softAPgetStationNum();

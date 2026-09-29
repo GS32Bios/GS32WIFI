@@ -49,6 +49,7 @@ public:
     
     // Сила сигнала (RSSI) текущего подключения
     int getRSSI() const;
+    int getRSSIPercentage() const;
     
     // Количество клиентов, подключенных к нашей AP
     int getConnectedClientsCount() const;
